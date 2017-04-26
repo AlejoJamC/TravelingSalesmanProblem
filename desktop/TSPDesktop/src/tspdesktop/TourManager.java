@@ -26,4 +26,9 @@ public class TourManager {
     public static int numberOfCities(){
         return destinationCities.size();
     }
+    
+    // Clear the content of the ArrayList
+    public static void clearCities(){
+        destinationCities.clear();
+    }
 }
