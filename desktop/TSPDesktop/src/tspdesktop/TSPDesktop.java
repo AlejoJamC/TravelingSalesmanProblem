@@ -18,7 +18,7 @@ public class TSPDesktop extends javax.swing.JFrame {
         initComponents();
     }
     
-    private void cargarCiudades() {
+    private void loadCities() {
         // Create and add our cities
         City city = new City(60, 200);
         TourManager.addCity(city);
@@ -63,14 +63,14 @@ public class TSPDesktop extends javax.swing.JFrame {
         txtTablero.append("Se cargaron las ciudades correctamente." + "\n");
     }
     
-    private Population cargarPoblacion(int popSize){
+    private Population loadPopulation(int popSize){
         // Initialize population
         Population pop = new Population(popSize, true);
         txtTablero.append("Distancia Inicial: " + pop.getFittest().getDistance() + "\n");
         return pop;
     }
     
-    private void evolucionarPoblacion(int iteraciones, Population pop, 
+    private void evolvePopulation(int iteraciones, Population pop, 
             double mutationRate, int tournamentSize, boolean elitism){
         // Evolve population for 100 generations
         GA.elitism = elitism;
@@ -118,9 +118,9 @@ public class TSPDesktop extends javax.swing.JFrame {
         txtIterations = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         txtTablero = new javax.swing.JTextArea();
-        btnCalcular = new javax.swing.JButton();
-        btnCerrar = new javax.swing.JButton();
-        btnLimpiar = new javax.swing.JButton();
+        btnCalculate = new javax.swing.JButton();
+        btnClose = new javax.swing.JButton();
+        btnClean = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Agente Viajero: Solución");
@@ -155,24 +155,24 @@ public class TSPDesktop extends javax.swing.JFrame {
         txtTablero.setRows(5);
         jScrollPane1.setViewportView(txtTablero);
 
-        btnCalcular.setText("Calcular");
-        btnCalcular.addActionListener(new java.awt.event.ActionListener() {
+        btnCalculate.setText("Calcular");
+        btnCalculate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCalcularActionPerformed(evt);
+                btnCalculateActionPerformed(evt);
             }
         });
 
-        btnCerrar.setText("Cerrar");
-        btnCerrar.addActionListener(new java.awt.event.ActionListener() {
+        btnClose.setText("Cerrar");
+        btnClose.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCerrarActionPerformed(evt);
+                btnCloseActionPerformed(evt);
             }
         });
 
-        btnLimpiar.setText("Limpiar Tablero");
-        btnLimpiar.addActionListener(new java.awt.event.ActionListener() {
+        btnClean.setText("Limpiar Tablero");
+        btnClean.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnLimpiarActionPerformed(evt);
+                btnCleanActionPerformed(evt);
             }
         });
 
@@ -211,10 +211,10 @@ public class TSPDesktop extends javax.swing.JFrame {
                         .addGap(26, 26, 26)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnCalcular)
+                                .addComponent(btnCalculate)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnCerrar))
-                            .addComponent(btnLimpiar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(btnClose))
+                            .addComponent(btnClean, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 248, Short.MAX_VALUE)
                 .addContainerGap())
@@ -247,11 +247,11 @@ public class TSPDesktop extends javax.swing.JFrame {
                             .addComponent(jLabel6)
                             .addComponent(txtIterations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                        .addComponent(btnLimpiar)
+                        .addComponent(btnClean)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnCalcular)
-                            .addComponent(btnCerrar)))
+                            .addComponent(btnCalculate)
+                            .addComponent(btnClose)))
                     .addComponent(jScrollPane1))
                 .addContainerGap())
         );
@@ -260,29 +260,29 @@ public class TSPDesktop extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCerrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCerrarActionPerformed
+    private void btnCloseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCloseActionPerformed
         System.exit(0);
-    }//GEN-LAST:event_btnCerrarActionPerformed
+    }//GEN-LAST:event_btnCloseActionPerformed
 
-    private void btnCalcularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalcularActionPerformed
-        int tamPoblacion = Integer.parseInt(txtPopulationSize.getText());
-        int iteraciones = Integer.parseInt(txtIterations.getText());
-        int tamTorneo = Integer.parseInt(txtTournamentSize.getText());
-        float tasaMutacion = Float.parseFloat(txtMutationRate.getText());
-        boolean elitismo = chkElitism.isSelected();
+    private void btnCalculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCalculateActionPerformed
+        int populationSize = Integer.parseInt(txtPopulationSize.getText());
+        int iterations = Integer.parseInt(txtIterations.getText());
+        int tournamentSize = Integer.parseInt(txtTournamentSize.getText());
+        float mutationRate = Float.parseFloat(txtMutationRate.getText());
+        boolean elitism = chkElitism.isSelected();
         // Check if txtTablero have content
         if(!(txtTablero.getText().isEmpty())){
             txtTablero.append("\n\n\n");
             cleanCities();
         }
-        cargarCiudades();
-        Population popResultado = cargarPoblacion(tamPoblacion);
-        evolucionarPoblacion(iteraciones, popResultado, tasaMutacion, tamTorneo, elitismo);
-    }//GEN-LAST:event_btnCalcularActionPerformed
+        loadCities();
+        Population popResultado = loadPopulation(populationSize);
+        evolvePopulation(iterations, popResultado, mutationRate, tournamentSize, elitism);
+    }//GEN-LAST:event_btnCalculateActionPerformed
 
-    private void btnLimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLimpiarActionPerformed
+    private void btnCleanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCleanActionPerformed
         txtTablero.setText("");
-    }//GEN-LAST:event_btnLimpiarActionPerformed
+    }//GEN-LAST:event_btnCleanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -320,9 +320,9 @@ public class TSPDesktop extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnCalcular;
-    private javax.swing.JButton btnCerrar;
-    private javax.swing.JButton btnLimpiar;
+    private javax.swing.JButton btnCalculate;
+    private javax.swing.JButton btnClean;
+    private javax.swing.JButton btnClose;
     private javax.swing.JCheckBox chkElitism;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
