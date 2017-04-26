@@ -80,7 +80,7 @@ public class TSPDesktop extends javax.swing.JFrame {
         pop = GA.evolvePopulation(pop);
         for (int i = 0; i < iteraciones; i++) {
             pop = GA.evolvePopulation(pop);
-            txtTablero.append("Iteración "+ i + ".  " + "\n");
+            txtTablero.append("Iteración "+ (i+1) + ".  " + "\n");
             txtTablero.append("Distancia: " + pop.getFittest().getDistance() + "\n");
             txtTablero.append("\n");
         }
